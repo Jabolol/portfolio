@@ -15,7 +15,7 @@ type SingleProjectProps = {
   project: string;
   title: string;
   text: string;
-  isWebm?: boolean;
+  isVideo?: boolean;
   techUsed: {
     id: string;
     url: string;
@@ -24,22 +24,39 @@ type SingleProjectProps = {
 };
 
 const WHITE_HEX = "#fff";
+const imageDimensions: Record<string, { width: number; height: number }> = {
+  aiko: { width: 660, height: 448 },
+  ducky: { width: 566, height: 441 },
+  kaito: { width: 613, height: 425 },
+  sarah: { width: 606, height: 389 },
+  shinobu: { width: 646, height: 570 },
+};
 
 function SingleProject({
   project,
   title,
   text,
   techUsed,
-  isWebm,
+  isVideo,
 }: SingleProjectProps) {
   return (
     <div className={"projects-div"}>
       <div className={"image"}>
-        {isWebm
+        {isVideo
           ? (
-            <video controls autoPlay loop muted playsInline>
-              <source src={asset(`/Projects/${project.toLowerCase()}.webm`)} type="video/webm"/>
-              <source src={asset(`/Projects/${project.toLowerCase()}.mp4`)} type="video/mp4"/>
+            <video
+              controls
+              autoPlay
+              loop
+              muted
+              playsInline
+              loading="lazy"
+              alt={`${project}`}
+            >
+              <source
+                src={asset(`/Projects/${project.toLowerCase()}.mp4`)}
+                type="video/mp4"
+              />
             </video>
           )
           : (
@@ -48,6 +65,9 @@ function SingleProject({
                 `/Projects/${project.toLowerCase()}.webp`,
               )}
               alt={project}
+              loading="lazy"
+              width={imageDimensions[project.toLowerCase()].width}
+              height={imageDimensions[project.toLowerCase()].height}
             />
           )}
       </div>
@@ -192,7 +212,7 @@ export default function Projects({ color, title, svg }: ProjectsProps) {
             },
           },
         ]}
-        isWebm={true}
+        isVideo={true}
       />
       <SingleProject
         project="Cryp2"
@@ -223,7 +243,7 @@ export default function Projects({ color, title, svg }: ProjectsProps) {
             colors: { light: ["#ffffff"], dark: ["#cd6799"] },
           },
         ]}
-        isWebm={true}
+        isVideo={true}
       />
       <SingleProject
         project="Shinobu"
@@ -486,7 +506,7 @@ export default function Projects({ color, title, svg }: ProjectsProps) {
             },
           },
         ]}
-        isWebm={true}
+        isVideo={true}
       />
       <div className={svg}>
         <svg
