@@ -1,0 +1,27 @@
+{
+  "name": "Javi's porfolio",
+  "short_name": "Javi's portfolio",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "description": "Explore Javi's portfolio and discover his latest projects in full stack development and design.",
+  "lang": "en-GB",
+  "dir": "ltr",
+  "orientation": "any"
+}
