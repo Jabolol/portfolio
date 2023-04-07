@@ -6,7 +6,7 @@ Welcome to my **portfolio**!
 
 - Showcases some of my latest projects and skills.
 - Built using Deno, a modern runtime for JavaScript and TypeScript.
-- Styled using Tailwind CSS To create a sleek and responsive design.
+- Styled using Tailwind CSS to create a sleek and responsive design.
 - Coded with TypeScript, to write clean and maintainable code.
 
 # getting started
