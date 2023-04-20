@@ -14,9 +14,6 @@ export const inject: Plugin = {
     render();
     return {
       scripts: [{
-        entrypoint: "worker",
-        state: {},
-      }, {
         entrypoint: "manifest",
         state: {
           type: "link",
