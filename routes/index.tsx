@@ -5,6 +5,7 @@ import About from "../islands/About.tsx";
 import Projects from "../islands/Projects.tsx";
 import Contact from "../islands/Contact.tsx";
 import Footer from "../islands/Footer.tsx";
+import Awards from "../islands/Awards.tsx";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <Hero />
         <About />
         <Projects />
+        <Awards />
         <Contact />
         <Footer />
       </main>
