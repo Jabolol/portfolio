@@ -56,7 +56,7 @@ export default function Contact() {
             Contact
           </h1>
           <p class="mt-4 text-lg lg:text-2xl text-gray-400 max-w-[18rem] md:max-w-[30rem] lg:max-w-[60rem]">
-            Let's get in touch.
+            How about we get in touch?
           </p>
         </div>
       </div>
