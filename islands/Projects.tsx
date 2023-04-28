@@ -44,15 +44,15 @@ const projects: Readonly<Parameters<typeof Project>[0][]> = [
   {
     title: "Portfolio",
     description:
-      "The third edition of my portfolio. Now with a slick design and better colors.",
+      "The third edition of my portfolio. Now with a slick design and a curated UI.",
     Logo: React,
     inject: "text-cyan-400",
-    link: "https://counterverse.vercel.app/",
+    link: "https://github.com/Jabolol/portfolio",
   },
   {
     title: "CarrierX",
     description:
-      "App to have an easier time managing all the paraphernalia related to carriers and deliveries.",
+      "Hackathon-winning app to have an easier time managing all the paraphernalia related to deliveries.",
     Logo: React,
     inject: "text-cyan-400",
     link: "https://github.com/Jabolol/carrierx",
@@ -115,6 +115,7 @@ const projects: Readonly<Parameters<typeof Project>[0][]> = [
       "Lightning-fast file compressor and decompressor that zaps and unzaps your files with Huffman Coding.",
     Logo: C,
     inject: "text-gray-400",
+    link: "https://github.com/Jabolol/fastfuse",
   },
   {
     title: "Labyrinthia",
@@ -122,6 +123,15 @@ const projects: Readonly<Parameters<typeof Project>[0][]> = [
       "Maze generation and solving with binary search trees and breadth-first algorithms.",
     Logo: C,
     inject: "text-gray-400",
+    link: "https://github.com/Jabolol/labyrinthia",
+  },
+  {
+    title: "PushSwap",
+    description:
+      "List ordering with this innovative algorithm and visualizer, using only two stacks and limited operations.",
+    Logo: C,
+    inject: "text-gray-400",
+    link: "https://github.com/Jabolol/pushswap",
   },
   {
     title: "Hunter",
@@ -134,13 +144,6 @@ const projects: Readonly<Parameters<typeof Project>[0][]> = [
     title: "Battleship",
     description:
       "Experience a fresh take on Battleship with this local multiplayer edition. Ready to sink some ships?",
-    Logo: C,
-    inject: "text-gray-400",
-  },
-  {
-    title: "PushSwap",
-    description:
-      "List ordering with this innovative algorithm and visualizer, using only two stacks and limited operations.",
     Logo: C,
     inject: "text-gray-400",
   },
