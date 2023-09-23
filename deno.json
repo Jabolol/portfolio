@@ -21,6 +21,7 @@
     "$icons/": "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/",
     "ga4/": "https://deno.land/x/fresh_ga4@0.0.2/",
     "github-calendar": "https://esm.sh/react-github-calendar@4.0.1?alias=react:preact/compat,@types/react:preact/compat&external=preact",
+    "activity-calendar": "https://esm.sh/react-activity-calendar@2.0.2",
     "~/": "./"
   },
   "lint": {

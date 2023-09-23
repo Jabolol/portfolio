@@ -1,8 +1,19 @@
 import GitHubCalendar from "github-calendar";
+import { Activity } from "activity-calendar";
 import useDarkMode from "~/hooks/darkMode.ts";
+import useWidth from "~/hooks/width.ts";
+
+const selectLastHalfYear = (contributions: Activity[]) =>
+  contributions.filter(
+    (activity) => (new Date(activity.date).getFullYear() ===
+        new Date().getFullYear() &&
+      new Date(activity.date).getMonth() > new Date().getMonth() - 6 &&
+      new Date(activity.date).getMonth() <= new Date().getMonth()),
+  );
 
 export default function Contributions() {
-  const { getMode } = useDarkMode();
+  const { mode } = useDarkMode();
+  const { width, breakpoint, getWidth } = useWidth();
 
   return (
     <>
@@ -22,8 +33,12 @@ export default function Contributions() {
       </div>
       <div class="flex justify-center items-center mb-5 md:mb-15 lg:mb-15 overflow-x-scroll mx-10">
         <GitHubCalendar
-          username="jabolol"
-          colorScheme={getMode().value}
+          username={"jabolol"}
+          colorScheme={mode.value}
+          transformData={width.value < getWidth(breakpoint.value)
+            ? selectLastHalfYear
+            : undefined}
+          labels={{ totalCount: "{{count}} contributions" }}
         />
       </div>
     </>

@@ -14,11 +14,9 @@ const useDarkMode = () => {
     }
   });
 
-  const getMode = () => {
-    return computed(() => isDarkMode.value ? "dark" : "light");
-  };
+  const mode = computed(() => isDarkMode.value ? "dark" : "light");
 
-  return { isDarkMode, toggle, getMode };
+  return { isDarkMode, toggle, mode };
 };
 
 export default useDarkMode;
