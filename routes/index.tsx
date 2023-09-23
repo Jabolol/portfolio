@@ -1,11 +1,11 @@
 import { Head } from "$fresh/runtime.ts";
-import Navbar from "../islands/Navbar.tsx";
-import Hero from "../islands/Hero.tsx";
-import About from "../components/About.tsx";
-import Projects from "../components/Projects.tsx";
-import Awards from "../components/Awards.tsx";
-import Contact from "../components/Contact.tsx";
-import Footer from "../components/Footer.tsx";
+import Navbar from "~/islands/Navbar.tsx";
+import Hero from "~/islands/Hero.tsx";
+import About from "~/components/About.tsx";
+import Projects from "~/components/Projects.tsx";
+import Awards from "~/components/Awards.tsx";
+import Contact from "~/components/Contact.tsx";
+import Footer from "~/components/Footer.tsx";
 
 export default function Home() {
   return (
