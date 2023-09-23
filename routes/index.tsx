@@ -6,6 +6,7 @@ import Projects from "~/components/Projects.tsx";
 import Awards from "~/components/Awards.tsx";
 import Contact from "~/components/Contact.tsx";
 import Footer from "~/components/Footer.tsx";
+import Contributions from "~/islands/Contributions.tsx";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
         <About />
         <Projects />
         <Awards />
+        <Contributions />
         <Contact />
         <Footer />
       </main>
