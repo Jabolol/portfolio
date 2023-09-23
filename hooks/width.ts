@@ -20,7 +20,6 @@ const useWidth = () => {
   };
 
   const getWidth = (breakpoint: typeof data["breakpoints"][number]) => {
-    // return the width of the breakpoint
     const index = data.breakpoints.indexOf(breakpoint) + 1;
     return data.width[index] ?? data.breakpoints[data.breakpoints.length - 1];
   };
