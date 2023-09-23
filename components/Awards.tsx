@@ -40,7 +40,8 @@ const details: Readonly<Parameters<typeof Award>[0][]> = [{
   description: "2nd place creating a Metaverse demo using Unity.",
   Component: Trophy,
   inject: "text-gray-400",
-  link: "https://www.linkedin.com/posts/javierriosur_this-sunday-the-metaverse-social-club-hackathon-activity-7003371720011059200-Ri0_",
+  link:
+    "https://www.linkedin.com/posts/javierriosur_this-sunday-the-metaverse-social-club-hackathon-activity-7003371720011059200-Ri0_",
 }];
 
 export default function Awards() {
