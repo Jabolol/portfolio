@@ -1,57 +1,55 @@
-const CACHE_NAME = "javi-portfolio-cache-v1";
-
-const urlsToCache = [
-  "/",
-  "/logo.svg",
-  "/site.webmanifest",
-  "/worker.js",
-];
+const CACHE_VERSION = 2;
+const CURRENT_CACHE = `javi-portfolio-cache-v${CACHE_VERSION}`;
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches
-      .open(CACHE_NAME)
-      .then((cache) => {
-        console.log("[Service Worker] Caching all");
-        return cache.addAll(urlsToCache);
-      })
-      .then(() => {
-        console.log(
-          "[Service Worker] Installation successful and all files cached",
-        );
-      })
-      .catch((error) => {
-        console.error(
-          "[Service Worker] Failed to install and cache files",
-          error,
-        );
+  const precache = async () => {
+    const cache = await caches.open(CURRENT_CACHE);
+    await cache.addAll([
+      "/",
+      "/logo.svg",
+      "/site.webmanifest",
+      "/worker.js",
+    ]);
+  };
+  event.waitUntil(precache());
+});
+
+self.addEventListener("activate", (evt) => {
+  const purge = async () => {
+    const cacheNames = caches.keys();
+    await Promise.all(
+      cacheNames.map((cacheName) => {
+        if (cacheName !== CURRENT_CACHE) {
+          return caches.delete(cacheName);
+        }
       }),
-  );
+    );
+  };
+  evt.waitUntil(purge());
 });
 
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    (async () => {
-      const r = await caches.match(event.request);
-      console.log(
-        `%c[Service Worker] Fetching resource: ${event.request.url}`,
-        "color: blue",
-      );
-      if (r) {
-        console.log(
-          `%c[Service Worker] Resource ${event.request.url} found in cache`,
-          "color: green",
-        );
-        return r;
-      }
-      const response = await fetch(event.request);
-      const cache = await caches.open(CACHE_NAME);
-      console.log(
-        `%c[Service Worker] Caching new resource: ${event.request.url}`,
-        "color: orange",
-      );
-      cache.put(event.request, response.clone());
+  const handler = async () => {
+    const response = await caches.match(event.request);
+    const isOutdated = response ? await isCacheOutdated(event.request) : false;
+    if (response && !isOutdated) {
       return response;
-    })(),
-  );
+    }
+    return fetch(event.request);
+  };
+  event.respondWith(handler());
 });
+
+async function isCacheOutdated(request) {
+  const cachedResponse = await caches.match(request);
+
+  if (!cachedResponse) {
+    return false;
+  }
+
+  const cachedLastModified = cachedResponse.headers.get("Last-Modified");
+  const serverRequest = await fetch(request, { method: "HEAD" });
+  const serverLastModified = serverRequest.headers.get("Last-Modified");
+
+  return serverLastModified > cachedLastModified;
+}
