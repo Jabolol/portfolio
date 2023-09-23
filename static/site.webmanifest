@@ -1,8 +1,8 @@
 {
   "name": "Javi's porfolio",
   "short_name": "Javi's portfolio",
-  "theme_color": "#000000",
-  "background_color": "#000000",
+  "theme_color": "#e05068",
+  "background_color": "#e05068",
   "icons": [
     {
       "src": "/logo.svg",

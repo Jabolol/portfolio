@@ -13,6 +13,14 @@ export const inject: Plugin = {
   render: ({ render }) => {
     render();
     return {
+      scripts: [{
+        entrypoint: "manifest",
+        state: {
+          type: "link",
+          rel: "manifest",
+          href: "/site.webmanifest",
+        },
+      }],
       styles: [{
         cssText: "html {scroll-behavior: smooth;}",
         id: CUSTOM_STYLE_ID,
