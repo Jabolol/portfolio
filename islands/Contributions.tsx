@@ -14,6 +14,7 @@ const selectLastHalfYear = (contributions: Activity[]) =>
 export default function Contributions() {
   const { mode } = useDarkMode();
   const { width, breakpoint, getWidth } = useWidth();
+  const isReduced = width.value < getWidth(breakpoint.value);
 
   return (
     <>
@@ -27,7 +28,8 @@ export default function Contributions() {
             Contributions
           </h1>
           <p class="mt-4 text-lg lg:text-2xl dark:text-gray-400 text-gray-600 max-w-[18rem] md:max-w-[30rem] lg:max-w-[60rem]">
-            GitHub graph for the last year.
+            GitHub graph for the last{" "}
+            {isReduced ? "6 months" : "year"}.
           </p>
         </div>
       </div>
@@ -35,9 +37,7 @@ export default function Contributions() {
         <GitHubCalendar
           username={"jabolol"}
           colorScheme={mode.value}
-          transformData={width.value < getWidth(breakpoint.value)
-            ? selectLastHalfYear
-            : undefined}
+          transformData={isReduced? selectLastHalfYear: undefined}
           labels={{ totalCount: "{{count}} contributions" }}
         />
       </div>
