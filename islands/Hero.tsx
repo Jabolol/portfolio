@@ -1,54 +1,22 @@
-import { useEffect, useRef, useState } from "preact/hooks";
-import { phrases } from "../misc.ts";
+import useFadeIn from "~/hooks/fadeIn.ts";
+import useIntro from "~/hooks/intro.ts";
 import OctoCat from "$icons/brand-github.tsx";
 
 export default function Hero() {
-  const [isVisible, setIsVisible] = useState<boolean>(true);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [intro, setIntro] = useState<string>(
-    phrases[Math.floor(Math.random() * phrases.length)],
-  );
-  const ref = useRef<HTMLDivElement | null>(null);
-  const observer = useRef<IntersectionObserver | null>(null);
-
-  useEffect(() => {
-    observer.current = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          ref.current!.classList.add("fade-in");
-          setIsLoaded(true);
-          observer.current!.disconnect();
-        }
-      },
-      {
-        threshold: 0.5,
-      },
-    );
-    observer.current.observe(ref.current!);
-    const intervalId = setInterval(() => {
-      setIsVisible(false);
-      setTimeout(() => {
-        setIntro(phrases[Math.floor(Math.random() * phrases.length)]);
-        setIsVisible(true);
-      }, 500);
-    }, 3000);
-    return () => {
-      clearInterval(intervalId);
-      observer.current!.disconnect();
-    };
-  }, []);
+  const { isLoaded, ref } = useFadeIn<HTMLDivElement>();
+  const { isVisible, intro } = useIntro();
 
   return (
     <div
       ref={ref}
       class={`bg-white dark:bg-gray-900 text-black dark:text-white pt-20`}
     >
-      <div class="container mx-auto px-16 py-12 sm:px-6 lg:px-8">
-        <h1
-          class={`text-5xl font-bold text-center mb-8 sm:mb-12 ${
-            isLoaded ? "opacity-100" : "opacity-0"
-          } transition-all duration-1000 ease-out`}
-        >
+      <div
+        class={`container mx-auto px-16 py-12 sm:px-6 lg:px-8 ${
+          isLoaded ? "opacity-100" : "opacity-0"
+        } transition-all duration-1000 ease-out`}
+      >
+        <h1 class="text-5xl font-bold text-center mb-8 sm:mb-12">
           Software engineering{" "}
           <span class="bg-gradient-to-r from-rose-500 to-fuchsia-500 text-transparent bg-clip-text">
             student
@@ -65,7 +33,7 @@ export default function Hero() {
         <div class="flex flex-col items-center gap-y-3">
           <p
             class={`${
-              isVisible ? "opacity-100" : "opacity-0"
+              isLoaded.value && isVisible.value ? "opacity-100" : "opacity-0"
             } transition-opacity duration-500 text-center text-lg md:text-2xl font-bold text-gray-400 lg:max-w-36rem lg:mx-auto`}
           >
             {intro}

@@ -1,29 +1,13 @@
-import { FaMoon, FaSun } from "../components/Icons.tsx";
-import { IS_BROWSER } from "$fresh/runtime.ts";
-import { useEffect, useState } from "preact/hooks";
+import { FaMoon, FaSun } from "~/components/Icons.tsx";
+import { useSignal } from "@preact/signals";
+import useDarkMode from "~/hooks/darkMode.ts";
 
 export default function NavBar() {
-  const [open, setOpen] = useState<boolean>(false);
-  const [darkMode, setDarkMode] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (IS_BROWSER) {
-      setDarkMode(document.documentElement.classList.contains("dark"));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (IS_BROWSER) {
-      document.documentElement.classList.toggle("dark");
-    }
-  }, [darkMode]);
+  const open = useSignal(false);
+  const { isDarkMode, toggle } = useDarkMode();
 
   return (
-    <nav
-      /* Deno uses and old version of twind with no support for backdrop-filter */
-      style={{ backdropFilter: "blur(4px)" }}
-      class="fixed bg-white bg-opacity-60 dark:bg-gray-900 dark:bg-opacity-60 shadow-md fixed w-full top-0 left-0 z-10"
-    >
+    <nav class="fixed bg-white bg-opacity-60 dark:bg-gray-900 dark:bg-opacity-60 shadow-md fixed w-full top-0 left-0 z-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
           <div class="flex">
@@ -72,17 +56,17 @@ export default function NavBar() {
           <div class="flex items-center -mr-2 gap-4">
             <button
               class="inline-flex items-center justify-center p-2 rounded-md text-black dark:text-white focus:outline-none"
-              onClick={() => setDarkMode((d) => !d)}
+              onClick={toggle}
             >
-              {darkMode ? <FaMoon /> : <FaSun />}
+              {isDarkMode.value ? <FaMoon /> : <FaSun />}
             </button>
             <button
               class="flex sm:hidden inline-flex items-center justify-center p-2 rounded-md text-black dark:text-white focus:outline-none"
               aria-label="Main menu"
-              aria-expanded={open ? "true" : "false"}
-              onClick={() => setOpen((o) => !o)}
+              aria-expanded={open.value ? "true" : "false"}
+              onClick={() => open.value = !open.value}
             >
-              {open
+              {open.value
                 ? (
                   <svg
                     class="block h-6 w-6"
@@ -119,7 +103,7 @@ export default function NavBar() {
           </div>
         </div>
       </div>
-      <div class={open ? "" : "hidden sm:hidden"}>
+      <div class={open.value ? "" : "hidden sm:hidden"}>
         <div class="pt-2 pb-1 space-y-1">
           <a
             href="#about"
