@@ -4,26 +4,10 @@ import Paint from "$icons/paint.tsx";
 import Tools from "$icons/tools.tsx";
 import Ruler from "$icons/ruler-measure.tsx";
 import Puzzle from "$icons/puzzle.tsx";
-import { JSX } from "preact/jsx-runtime";
+import Card from "~/components/Card.tsx";
+import { CardProps } from "~/types.ts";
 
-const Card = (
-  { title, description, Component, inject }: {
-    title: string;
-    description: string;
-    Component: ({ ...props }) => JSX.Element;
-    inject: string;
-  },
-) => (
-  <div class="flex flex-col items-center">
-    <Component class={`h-10 w-auto m-5 ${inject}`} />
-    <h1 class="text-1xl font-bold">{title}</h1>
-    <p class="text-gray-400 text-center m-2 max-w-[16rem]">
-      {description}
-    </p>
-  </div>
-);
-
-const info: Readonly<Parameters<typeof Card>[0][]> = [
+const info: CardProps[] = [
   {
     title: "Innovative",
     description:
@@ -80,13 +64,20 @@ export default function About() {
           <h1 class="font-black text-dim text-4xl mt-10 text-3xl">
             About me
           </h1>
-          <p class="mt-4 text-lg lg:text-2xl text-gray-400 max-w-[18rem] md:max-w-[30rem] lg:max-w-[60rem]">
+          <p class="mt-4 text-lg lg:text-2xl dark:text-gray-400 text-gray-600 max-w-[18rem] md:max-w-[30rem] lg:max-w-[60rem]">
             Get to know me a little better.
           </p>
         </div>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {info.map((props) => <Card {...props} />)}
+        {info.map(({ title, description, Component, inject }) => (
+          <Card
+            title={title}
+            description={description}
+            Component={Component}
+            inject={inject}
+          />
+        ))}
       </div>
     </>
   );

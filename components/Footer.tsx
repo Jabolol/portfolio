@@ -2,7 +2,7 @@ import DenoIcon from "$icons/brand-deno.tsx";
 
 export default function Footer() {
   return (
-    <footer class="flex flex-col justify-center items-center py-6 text-gray-600 dark:text-gray-400">
+    <footer class="flex flex-col justify-center items-center py-6 text-gray-600 dark:dark:text-gray-400 text-gray-600">
       <div class="flex flex-row items-center space-x-2 mb-4">
         <DenoIcon class="w-6 h-6" />
         <p class="text-sm font-medium">

@@ -2,7 +2,7 @@ import { useSignal, useSignalEffect } from "@preact/signals";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
 const useDarkMode = () => {
-  const isDarkMode = useSignal<boolean>(false);
+  const isDarkMode = useSignal<boolean>(true);
 
   const toggle = () => {
     isDarkMode.value = !isDarkMode.value;

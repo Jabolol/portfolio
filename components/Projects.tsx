@@ -35,7 +35,7 @@ const Project = (
       </div>
     </div>
     <div class="flex-shrink-0 w-5 h-5 ml-3">
-      <ArrowRight class="text-gray-400 dark:text-gray-400 w-full h-full" />
+      <ArrowRight class="dark:text-gray-400 text-gray-600 dark:dark:text-gray-400 text-gray-600 w-full h-full" />
     </div>
   </a>
 );
@@ -114,7 +114,7 @@ const projects: Readonly<Parameters<typeof Project>[0][]> = [
     description:
       "Lightning-fast file compressor and decompressor that zaps and unzaps your files with Huffman Coding.",
     Logo: C,
-    inject: "text-gray-400",
+    inject: "dark:text-gray-400 text-gray-600",
     link: "https://github.com/Jabolol/fastfuse",
   },
   {
@@ -122,7 +122,7 @@ const projects: Readonly<Parameters<typeof Project>[0][]> = [
     description:
       "Maze generation and solving with binary search trees and breadth-first algorithms.",
     Logo: C,
-    inject: "text-gray-400",
+    inject: "dark:text-gray-400 text-gray-600",
     link: "https://github.com/Jabolol/labyrinthia",
   },
   {
@@ -130,7 +130,7 @@ const projects: Readonly<Parameters<typeof Project>[0][]> = [
     description:
       "List ordering with this innovative algorithm and visualizer, using only two stacks and limited operations.",
     Logo: C,
-    inject: "text-gray-400",
+    inject: "dark:text-gray-400 text-gray-600",
     link: "https://github.com/Jabolol/pushswap",
   },
   {
@@ -138,21 +138,21 @@ const projects: Readonly<Parameters<typeof Project>[0][]> = [
     description:
       "New version of Nintendo's Duck Hunt. Aim, shoot, and compete for the highest score.",
     Logo: C,
-    inject: "text-gray-400",
+    inject: "dark:text-gray-400 text-gray-600",
   },
   {
     title: "Battleship",
     description:
       "Experience a fresh take on Battleship with this local multiplayer edition. Ready to sink some ships?",
     Logo: C,
-    inject: "text-gray-400",
+    inject: "dark:text-gray-400 text-gray-600",
   },
   {
     title: "MyShell",
     description:
       "Custom UNIX-like shell with library functions. Streamlined and powerful interface for advanced workflow.",
     Logo: C,
-    inject: "text-gray-400",
+    inject: "dark:text-gray-400 text-gray-600",
   },
 ];
 
@@ -168,7 +168,7 @@ export default function Projects() {
           <h1 class="font-black text-dim text-4xl mt-10 text-3xl">
             Projects
           </h1>
-          <p class="mt-4 text-lg lg:text-2xl text-gray-400 max-w-[18rem] md:max-w-[30rem] lg:max-w-[60rem]">
+          <p class="mt-4 text-lg lg:text-2xl dark:text-gray-400 text-gray-600 max-w-[18rem] md:max-w-[30rem] lg:max-w-[60rem]">
             Some of my coolest Projects.
           </p>
         </div>

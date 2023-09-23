@@ -1,29 +1,10 @@
 import Mail from "$icons/mail.tsx";
 import LinkedIn from "$icons/brand-linkedin.tsx";
 import Github from "$icons/brand-github.tsx";
-import { JSX } from "preact/jsx-runtime";
+import { CardProps } from "~/types.ts";
+import Card from "~/components/Card.tsx";
 
-const Info = (
-  { title, description, Component, inject, link }: {
-    title: string;
-    description: string;
-    Component: ({ ...props }) => JSX.Element;
-    inject: string;
-    link: string;
-  },
-) => (
-  <a href={link} target="_blank" rel="noopener noreferrer">
-    <div class="flex flex-col items-center">
-      <Component class={`h-10 w-auto m-5 ${inject}`} />
-      <h1 class="text-1xl font-bold">{title}</h1>
-      <p class="text-gray-400 text-center m-2 max-w-[16rem]">
-        {description}
-      </p>
-    </div>
-  </a>
-);
-
-const details: Readonly<Parameters<typeof Info>[0][]> = [{
+const details: (CardProps & { link: string })[] = [{
   title: "LinkedIn",
   description: "Posts about events, conventions and everything in between.",
   Component: LinkedIn,
@@ -55,13 +36,22 @@ export default function Contact() {
           <h1 class="font-black text-dim text-4xl mt-10 text-3xl">
             Contact
           </h1>
-          <p class="mt-4 text-lg lg:text-2xl text-gray-400 max-w-[18rem] md:max-w-[30rem] lg:max-w-[60rem]">
+          <p class="mt-4 text-lg lg:text-2xl dark:text-gray-400 text-gray-600 max-w-[18rem] md:max-w-[30rem] lg:max-w-[60rem]">
             How about we get in touch?
           </p>
         </div>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center mb-5 md:mb-15 lg:mb-15">
-        {details.map((props) => <Info {...props} />)}
+        {details.map(({ link, title, description, Component, inject }) => (
+          <a href={link} target="_blank" rel="noopener noreferrer">
+            <Card
+              title={title}
+              description={description}
+              Component={Component}
+              inject={inject}
+            />
+          </a>
+        ))}
       </div>
     </>
   );

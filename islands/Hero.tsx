@@ -34,7 +34,7 @@ export default function Hero() {
           <p
             class={`${
               isLoaded.value && isVisible.value ? "opacity-100" : "opacity-0"
-            } transition-opacity duration-500 text-center text-lg md:text-2xl font-bold text-gray-400 lg:max-w-36rem lg:mx-auto`}
+            } transition-opacity duration-500 text-center text-lg md:text-2xl font-bold dark:text-gray-400 text-gray-600 lg:max-w-36rem lg:mx-auto`}
           >
             {intro}
           </p>
