@@ -1,21 +1,12 @@
-import useFadeIn from "~/hooks/fadeIn.ts";
 import useIntro from "~/hooks/intro.ts";
 import OctoCat from "$icons/brand-github.tsx";
 
 export default function Hero() {
-  const { isLoaded, ref } = useFadeIn<HTMLDivElement>();
   const { isVisible, intro } = useIntro();
 
   return (
-    <div
-      ref={ref}
-      class={`bg-white dark:bg-gray-900 text-black dark:text-white pt-20`}
-    >
-      <div
-        class={`container mx-auto px-16 py-12 sm:px-6 lg:px-8 ${
-          isLoaded ? "opacity-100" : "opacity-0"
-        } transition-all duration-1000 ease-out`}
-      >
+    <div class="pt-20">
+      <div class="container mx-auto px-16 py-12 sm:px-6 lg:px-8">
         <h1 class="text-5xl font-bold text-center mb-8 sm:mb-12">
           Software engineering{" "}
           <span class="bg-gradient-to-r from-rose-500 to-fuchsia-500 text-transparent bg-clip-text">
@@ -33,7 +24,7 @@ export default function Hero() {
         <div class="flex flex-col items-center gap-y-3">
           <p
             class={`${
-              isLoaded.value && isVisible.value ? "opacity-100" : "opacity-0"
+              isVisible.value ? "opacity-100" : "opacity-0"
             } transition-opacity duration-500 text-center text-lg md:text-2xl font-bold dark:text-gray-400 text-gray-600 lg:max-w-36rem lg:mx-auto`}
           >
             {intro}
