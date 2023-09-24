@@ -1,22 +1,18 @@
-import GitHubCalendar from "github-calendar";
-import { Activity } from "activity-calendar";
+import { useSignal, useSignalEffect } from "@preact/signals";
 import useDarkMode from "~/hooks/darkMode.ts";
 import useWidth from "~/hooks/width.ts";
-import useFadeIn from "~/hooks/fadeIn.ts";
-
-const selectLastHalfYear = (contributions: Activity[]) =>
-  contributions.filter(
-    (activity) => (new Date(activity.date).getFullYear() ===
-        new Date().getFullYear() &&
-      new Date(activity.date).getMonth() > new Date().getMonth() - 6 &&
-      new Date(activity.date).getMonth() <= new Date().getMonth()),
-  );
 
 export default function Contributions() {
   const { mode } = useDarkMode();
   const { width, breakpoint, getWidth } = useWidth();
-  const { isLoaded, ref } = useFadeIn<HTMLDivElement>();
   const isReduced = width.value < getWidth(breakpoint.value);
+  const total = useSignal(NaN);
+
+  useSignalEffect(() => {
+    fetch("/api/graph?json=true")
+      .then((res) => res.json())
+      .then((data) => total.value = data);
+  });
 
   return (
     <>
@@ -24,27 +20,18 @@ export default function Contributions() {
         class="w-48 h-1 mt-12 mx-auto bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700"
         id="contact"
       />
-      <div ref={ref} class="flex items-center justify-center my-5">
+      <div class="flex items-center justify-center mt-5">
         <div class="mx-auto lg:px-6 lg:text-center text-center md:pb-5 lg:pb-5">
           <h1 class="font-black text-dim text-4xl mt-10 text-3xl">
             Contributions
           </h1>
           <p class="mt-4 text-lg lg:text-2xl dark:text-gray-400 text-gray-600 max-w-[18rem] md:max-w-[30rem] lg:max-w-[60rem]">
-            GitHub graph for the last {isReduced ? "6 months" : "year"}.
+            {total.value} commits in the last {isReduced ? "6 months" : "year"}.
           </p>
         </div>
       </div>
-      <div
-        class={`${
-          isLoaded.value ? "opacity-100" : "opacity-0"
-        } transition-opacity duration-500 text-center flex justify-center items-center mb-5 md:mb-15 lg:mb-15 overflow-x-scroll mx-10`}
-      >
-        <GitHubCalendar
-          username={"jabolol"}
-          colorScheme={mode.value}
-          transformData={isReduced ? selectLastHalfYear : undefined}
-          labels={{ totalCount: "{{count}} contributions" }}
-        />
+      <div class="transition-opacity duration-500 text-center flex justify-center items-center mb-5 md:mb-15 lg:mb-15 overflow-x-scroll mx-10">
+        <img src={`/api/graph?mode=${mode.value}&half=${isReduced}`} />
       </div>
     </>
   );
