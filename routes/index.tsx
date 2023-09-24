@@ -14,7 +14,7 @@ export default function Home() {
       <Head>
         <title>Javier R.</title>
       </Head>
-      <main class="bg-white dark:bg-gray-900 text-black dark:text-white">
+      <main class="bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-500">
         <Navbar />
         <Hero />
         <About />
