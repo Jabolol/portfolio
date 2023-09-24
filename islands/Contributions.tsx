@@ -1,10 +1,12 @@
 import { useSignal, useSignalEffect } from "@preact/signals";
 import useDarkMode from "~/hooks/darkMode.ts";
 import useWidth from "~/hooks/width.ts";
+import useFadeIn from "~/hooks/fadeIn.ts";
 
 export default function Contributions() {
   const { mode } = useDarkMode();
   const { width, breakpoint, getWidth } = useWidth();
+  const { ref, isLoaded } = useFadeIn<HTMLDivElement>();
   const isReduced = width.value < getWidth(breakpoint.value);
   const total = useSignal(NaN);
 
@@ -30,8 +32,16 @@ export default function Contributions() {
           </p>
         </div>
       </div>
-      <div class="transition-opacity duration-500 text-center flex justify-center items-center mb-5 md:mb-15 lg:mb-15 overflow-x-scroll mx-10">
-        <img src={`/api/graph?mode=${mode.value}&half=${isReduced}`} />
+      <div
+        ref={ref}
+        class={`${
+          isLoaded.value ? "opacity-100" : "opacity-0"
+        } transition-opacity duration-500 text-center flex justify-center items-center mb-5 md:mb-15 lg:mb-15 overflow-x-scroll mx-10`}
+      >
+        <img
+          class="transition-opacity duration-500"
+          src={`/api/graph?mode=${mode.value}&half=${isReduced}`}
+        />
       </div>
     </>
   );
