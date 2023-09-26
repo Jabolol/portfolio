@@ -45,7 +45,10 @@ export default function Contributions() {
         } transition-opacity duration-500 text-center flex justify-center items-center mb-5 md:mb-15 lg:mb-15 overflow-x-scroll mx-10`}
       >
         <img
+          height={130}
+          width={isReduced ? 428 : 844}
           class="transition-opacity duration-500"
+          alt={`Contributions graph for ${mode.value} mode`}
           src={`/api/graph?mode=${mode.value}&half=${isReduced}`}
         />
       </div>

@@ -56,6 +56,7 @@ export default function NavBar() {
 
           <div class="flex items-center -mr-2 gap-4">
             <button
+              aria-label={isDarkMode.value ? "Activate light mode" : "Activate dark mode"}
               class="inline-flex items-center justify-center p-2 rounded-md text-black dark:text-white focus:outline-none"
               onClick={toggle}
             >
