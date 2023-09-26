@@ -8,12 +8,11 @@ const useDarkMode = () => {
   const toggle = () => isDarkMode.value = !isDarkMode.value;
 
   if (!isListening.value && IS_BROWSER) {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    isDarkMode.value = mediaQuery.matches;
+
     useSignalEffect(() => {
       document.documentElement.classList.toggle("dark", isDarkMode.value);
-
-      return () => {
-        isListening.value = false;
-      };
     });
   }
 
