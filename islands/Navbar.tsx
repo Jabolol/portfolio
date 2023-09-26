@@ -1,4 +1,5 @@
-import { FaMoon, FaSun } from "~/components/Icons.tsx";
+import IconSun from "$icons/sun.tsx";
+import IconMoon from "$icons/moon.tsx";
 import { useSignal } from "@preact/signals";
 import useDarkMode from "~/hooks/darkMode.ts";
 
@@ -58,7 +59,7 @@ export default function NavBar() {
               class="inline-flex items-center justify-center p-2 rounded-md text-black dark:text-white focus:outline-none"
               onClick={toggle}
             >
-              {isDarkMode.value ? <FaMoon /> : <FaSun />}
+              {isDarkMode.value ? <IconMoon /> : <IconSun />}
             </button>
             <button
               class="flex sm:hidden inline-flex items-center justify-center p-2 rounded-md text-black dark:text-white focus:outline-none"
