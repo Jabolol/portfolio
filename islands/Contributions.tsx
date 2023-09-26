@@ -11,9 +11,15 @@ export default function Contributions() {
   const total = useSignal(NaN);
 
   useSignalEffect(() => {
-    fetch("/api/graph?json=true")
-      .then((res) => res.json())
-      .then((data) => total.value = data);
+    const controller = new AbortController();
+
+    fetch("/api/graph?json=true", { signal: controller.signal }).then((res) =>
+      res.json()
+    ).then((data) => total.value = data);
+
+    return () => {
+      controller.abort();
+    };
   });
 
   return (
