@@ -1,28 +1,5 @@
-import Mail from "$icons/mail.tsx";
-import LinkedIn from "$icons/brand-linkedin.tsx";
-import Github from "$icons/brand-github.tsx";
-import { CardProps } from "~/types.ts";
 import Card from "~/components/Card.tsx";
-
-const details: (CardProps & { link: string })[] = [{
-  title: "LinkedIn",
-  description: "Posts about events, conventions and everything in between.",
-  Component: LinkedIn,
-  inject: "text-blue-500",
-  link: "https://www.linkedin.com/in/javierriosur/",
-}, {
-  title: "Email",
-  description: "The best way to reach me.",
-  link: "mailto:javier.rios-urbano@epitech.eu",
-  Component: Mail,
-  inject: "text-pink-400",
-}, {
-  title: "GitHub",
-  description: "Open source contributions, interests and my latest projects.",
-  Component: Github,
-  inject: "text-black dark:text-white",
-  link: "https://github.com/Jabolol",
-}];
+import { contact } from "~/misc.ts";
 
 export default function Contact() {
   return (
@@ -42,7 +19,7 @@ export default function Contact() {
         </div>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center mb-5 md:mb-15 lg:mb-15">
-        {details.map(({ link, title, description, Component, inject }) => (
+        {contact.map(({ link, title, description, Component, inject }) => (
           <a href={link} target="_blank" rel="noopener noreferrer">
             <Card
               title={title}

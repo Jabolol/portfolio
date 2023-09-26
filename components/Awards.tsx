@@ -1,58 +1,5 @@
-import Trophy from "$icons/trophy.tsx";
 import Card from "~/components/Card.tsx";
-import { CardProps } from "~/types.ts";
-
-const details: (CardProps & { link: string })[] = [
-  {
-    title: "XDC Foundation",
-    description: "1st place in the Social Media Crypto Bot category.",
-    Component: Trophy,
-    inject: "text-yellow-500",
-    link:
-      "https://www.linkedin.com/posts/javierriosur_last-week-i-had-the-opportunity-to-participate-activity-7084512255098126336-hiaL",
-  },
-  {
-    title: "Mediamarkt Hackathon",
-    description:
-      "1st place building a mobile app and blockchain Proof of Concept.",
-    Component: Trophy,
-    inject: "text-yellow-500",
-    link:
-      "https://www.linkedin.com/posts/javierriosur_letsgomediamarkt-mediamarktsaturntechnology-activity-7052268380841553921-7OsO",
-  },
-  {
-    title: "Google & Interacso Open Source Jam",
-    description: "1st place contributing to open-source projects on GitHub.",
-    Component: Trophy,
-    inject: "text-yellow-500",
-    link:
-      "https://www.linkedin.com/posts/javierriosur_thrilled-to-share-that-i-emerged-as-a-winner-activity-7078410738955882497-ciRz",
-  },
-  {
-    title: "NEAR Web3 Hackathon",
-    description: "1st place building a decentralised certification storage.",
-    Component: Trophy,
-    inject: "text-yellow-400",
-    link:
-      "https://www.linkedin.com/posts/alex-arteaga-c_honored-to-have-participated-in-this-weekends-activity-7053675065107750913-6uq4",
-  },
-  {
-    title: "ETH Barcelona Hackathon",
-    description: "Best Decentralized Finance project in the hackathon.",
-    Component: Trophy,
-    inject: "text-yellow-500",
-    link:
-      "https://www.linkedin.com/posts/alex-arteaga-c_great-news-im-elated-to-share-with-activity-7084461331734511616-0y0g",
-  },
-  {
-    title: "IBM Metaverse Hackathon",
-    description: "2nd place creating a Metaverse demo using Unity.",
-    Component: Trophy,
-    inject: "text-gray-400",
-    link:
-      "https://www.linkedin.com/posts/javierriosur_this-sunday-the-metaverse-social-club-hackathon-activity-7003371720011059200-Ri0_",
-  },
-];
+import { awards } from "~/misc.ts";
 
 export default function Awards() {
   return (
@@ -72,7 +19,7 @@ export default function Awards() {
         </div>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center mb-5 md:mb-15 lg:mb-15">
-        {details.map(({ link, title, description, Component, inject }) => (
+        {awards.map(({ link, title, description, Component, inject }) => (
           <a href={link} target="_blank" rel="noopener noreferrer">
             <Card
               title={title}
