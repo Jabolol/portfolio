@@ -10,7 +10,7 @@ const useWidth = () => {
   const data = {
     width: [0, 768, 992, 1200],
     breakpoints: ["sm", "md", "lg", "xl"],
-  };
+  } as const;
 
   const getBreakpoint = () => {
     const index = data.width.findIndex((min, i, arr) =>
@@ -26,7 +26,7 @@ const useWidth = () => {
 
   const breakpoint = useComputed(getBreakpoint);
 
-  addEventListener("resize", onResize);
+  addEventListener("resize", onResize, { passive: true });
 
   return { width, breakpoint, getWidth };
 };
