@@ -12,10 +12,8 @@ import Typescript from "$icons/brand-typescript.tsx";
 import C from "$icons/brand-coinbase.tsx";
 import Ruby from "$icons/diamond.tsx";
 import React from "$icons/brand-react.tsx";
-import Vue from "$icons/brand-vue.tsx";
 import Markdown from "$icons/markdown.tsx";
-import Python from "$icons/brand-python.tsx";
-import { CardProps, WithLink } from "~/types.ts";
+import { CardProps } from "~/types.ts";
 
 export const about: CardProps[] = [
   {
@@ -62,7 +60,7 @@ export const about: CardProps[] = [
   },
 ];
 
-export const awards: WithLink[] = [
+export const awards: CardProps[] = [
   {
     title: "XDC Foundation",
     description: "1st place in the Social Media Crypto Bot category.",
@@ -114,7 +112,7 @@ export const awards: WithLink[] = [
   },
 ];
 
-export const contact: WithLink[] = [{
+export const contact: CardProps[] = [{
   title: "LinkedIn",
   description: "Posts about events, conventions and everything in between.",
   Component: LinkedIn,
@@ -134,70 +132,28 @@ export const contact: WithLink[] = [{
   link: "https://github.com/Jabolol",
 }];
 
-export const projects: WithLink[] = [
+export const projects: CardProps[] = [
   {
-    title: "Portfolio",
-    description:
-      "The third edition of my portfolio. Now with a slick design and a curated UI.",
-    Component: React,
-    inject: "text-cyan-400",
-    link: "https://github.com/Jabolol/portfolio",
-  },
-  {
-    title: "CarrierX",
-    description:
-      "Hackathon-winning app to have an easier time managing all the paraphernalia related to deliveries.",
-    Component: React,
-    inject: "text-cyan-400",
-    link: "https://github.com/Jabolol/carrierx",
-  },
-  {
-    title: "Counterverse",
-    description:
-      "A revolutionary way to buy, sell, and merge unique digital assets in this NFT marketplace.",
-    Component: React,
-    inject: "text-cyan-400",
-    link: "https://counterverse.vercel.app/",
-  },
-  {
-    title: "UniCal",
-    description:
-      "Auto-scraping and dynamic Apple Calendar integration for my university events.",
+    title: "Toucan",
+    description: "XDC tracker and hackathon winner submission for ETH BCN 2023",
     Component: Typescript,
     inject: "text-blue-500",
-    link: "https://github.com/Jabolol",
+    link: "https://github.com/Jabolol/toucan",
   },
   {
-    title: "FFI",
+    title: "Raven",
     description:
-      "Deno Foreign Function Interface learning resources for my university colleagues.",
-    Component: Typescript,
-    inject: "text-blue-500",
-    link: "https://deno-pitch.vercel.app/",
+      "Custom BeReal app that allows you to see BeReals without posting.",
+    Component: React,
+    inject: "text-cyan-400",
+    link: "https://github.com/Jabolol/raven/",
   },
   {
-    title: "Blog",
-    description:
-      "My blog. 100% opinionated, unapologetically me, and not for the faint of heart.",
-    Component: Markdown,
-    inject: "text-blue-600",
-    link: "https://javi-blog.deno.dev/",
-  },
-  {
-    title: "BitStat",
-    description:
-      "Track the latest crypto trends and stay on top of the market with real-time statistics and news.",
-    Component: Vue,
-    inject: "text-green-400",
-    link: "https://github.com/Jabolol",
-  },
-  {
-    title: "Slashy",
-    description:
-      "Streamline your app development with this utility tool for seamless slash command registration.",
-    Component: Python,
-    inject: "text-yellow-400",
-    link: "https://github.com/Jabolol",
+    title: "GameBoy",
+    description: "A GameBoy emulator written from scratch in C, using SDL2.",
+    Component: C,
+    inject: "dark:text-gray-400 text-gray-600",
+    link: "https://github.com/Jabolol/gameboy",
   },
   {
     title: "SkySpy",
@@ -208,52 +164,19 @@ export const projects: WithLink[] = [
     link: "https://github.com/Jabolol",
   },
   {
-    title: "FastFuse",
+    title: "Turbo",
     description:
-      "Lightning-fast file compressor and decompressor that zaps and unzaps your files with Huffman Coding.",
+      "High-performance framework for Deno, optimizing speed using FFI.",
     Component: C,
     inject: "dark:text-gray-400 text-gray-600",
-    link: "https://github.com/Jabolol/fastfuse",
+    link: "https://github.com/Jabolol/turbo",
   },
   {
-    title: "Labyrinthia",
-    description:
-      "Maze generation and solving with binary search trees and breadth-first algorithms.",
-    Component: C,
-    inject: "dark:text-gray-400 text-gray-600",
-    link: "https://github.com/Jabolol/labyrinthia",
-  },
-  {
-    title: "PushSwap",
-    description:
-      "List ordering with this innovative algorithm and visualizer, using only two stacks and limited operations.",
-    Component: C,
-    inject: "dark:text-gray-400 text-gray-600",
-    link: "https://github.com/Jabolol/pushswap",
-  },
-  {
-    title: "Hunter",
-    description:
-      "New version of Nintendo's Duck Hunt. Aim, shoot, and compete for the highest score.",
-    Component: C,
-    inject: "dark:text-gray-400 text-gray-600",
-    link: "https://github.com/Jabolol",
-  },
-  {
-    title: "Battleship",
-    description:
-      "Experience a fresh take on Battleship with this local multiplayer edition. Ready to sink some ships?",
-    Component: C,
-    inject: "dark:text-gray-400 text-gray-600",
-    link: "https://github.com/Jabolol",
-  },
-  {
-    title: "MyShell",
-    description:
-      "Custom UNIX-like shell with library functions. Streamlined and powerful interface for advanced workflow.",
-    Component: C,
-    inject: "dark:text-gray-400 text-gray-600",
-    link: "https://github.com/Jabolol",
+    title: "Blog",
+    description: "Hard concepts explained in a simple and intuitive way.",
+    Component: Markdown,
+    inject: "text-blue-600",
+    link: "https://javi-blog.deno.dev/",
   },
 ];
 
