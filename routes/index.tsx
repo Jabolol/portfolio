@@ -1,12 +1,10 @@
 import { Head } from "$fresh/runtime.ts";
 import Navbar from "~/islands/Navbar.tsx";
 import Hero from "~/islands/Hero.tsx";
-import About from "~/components/About.tsx";
-import Projects from "~/components/Projects.tsx";
-import Awards from "~/components/Awards.tsx";
-import Contact from "~/components/Contact.tsx";
 import Footer from "~/components/Footer.tsx";
 import Contributions from "~/islands/Contributions.tsx";
+import Section from "~/components/Section.tsx";
+import { about, awards, contact, projects } from "~/misc.ts";
 
 export default function Home() {
   return (
@@ -17,11 +15,31 @@ export default function Home() {
       <main class="bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-500">
         <Navbar />
         <Hero />
-        <About />
-        <Projects />
-        <Awards />
+        <Section
+          id="about"
+          title="About me"
+          description="Get to know me a little better."
+          items={about}
+        />
+        <Section
+          id="projects"
+          title="Projects"
+          description="Some of my latest projects."
+          items={projects}
+        />
+        <Section
+          id="awards"
+          title="Awards"
+          description="Some of my hackathon feats."
+          items={awards}
+        />
         <Contributions />
-        <Contact />
+        <Section
+          id="contact"
+          title="Contact"
+          description="How about we get in touch?"
+          items={contact}
+        />
         <Footer />
       </main>
     </>

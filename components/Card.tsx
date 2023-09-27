@@ -1,7 +1,19 @@
+import { JSX } from "preact/jsx-runtime";
 import { CardProps } from "~/types.ts";
 
+const Wrapper = (nodes: JSX.Element, link?: string) => {
+  if (link) {
+    return (
+      <a href={link} target="_blank" rel="noopener noreferrer">
+        {nodes}
+      </a>
+    );
+  }
+  return nodes;
+};
+
 const Card = (
-  { title, description, Component, inject }: CardProps,
+  { title, description, Component, inject, link }: CardProps,
 ) => (
   <div class="flex flex-col items-center">
     <Component class={`h-10 w-auto m-5 ${inject}`} />
@@ -12,4 +24,6 @@ const Card = (
   </div>
 );
 
-export default Card;
+export default function (props: CardProps) {
+  return Wrapper(Card(props), props.link);
+}
