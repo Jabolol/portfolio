@@ -26,7 +26,7 @@ export default function Contributions() {
     <>
       <hr
         class="w-48 h-1 mt-12 mx-auto bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700"
-        id="contact"
+        id="contributions"
       />
       <div class="flex items-center justify-center mt-5">
         <div class="mx-auto lg:px-6 lg:text-center text-center md:pb-5 lg:pb-5">
