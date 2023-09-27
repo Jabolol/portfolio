@@ -8,6 +8,10 @@ export type CardProps = {
   inject: string;
 };
 
+export type WithLink = {
+  link: string;
+} & CardProps;
+
 export type Year = number | "last";
 
 export type ApiResponse = {

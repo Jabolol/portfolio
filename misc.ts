@@ -15,7 +15,7 @@ import React from "$icons/brand-react.tsx";
 import Vue from "$icons/brand-vue.tsx";
 import Markdown from "$icons/markdown.tsx";
 import Python from "$icons/brand-python.tsx";
-import { CardProps } from "~/types.ts";
+import { CardProps, WithLink } from "~/types.ts";
 
 export const about: CardProps[] = [
   {
@@ -62,7 +62,7 @@ export const about: CardProps[] = [
   },
 ];
 
-export const awards: (CardProps & { link: string })[] = [
+export const awards: WithLink[] = [
   {
     title: "XDC Foundation",
     description: "1st place in the Social Media Crypto Bot category.",
@@ -114,7 +114,7 @@ export const awards: (CardProps & { link: string })[] = [
   },
 ];
 
-export const contact: (CardProps & { link: string })[] = [{
+export const contact: WithLink[] = [{
   title: "LinkedIn",
   description: "Posts about events, conventions and everything in between.",
   Component: LinkedIn,
@@ -134,7 +134,7 @@ export const contact: (CardProps & { link: string })[] = [{
   link: "https://github.com/Jabolol",
 }];
 
-export const projects: (CardProps & { link: string })[] = [
+export const projects: WithLink[] = [
   {
     title: "Portfolio",
     description:
