@@ -14,9 +14,9 @@ const useDarkMode = () => {
     useSignalEffect(() => {
       document.documentElement.classList.toggle("dark", isDarkMode.value);
     });
-  }
 
-  isListening.value = true;
+    isListening.value = true;
+  }
 
   const mode = computed(() => isDarkMode.value ? "dark" : "light");
 
