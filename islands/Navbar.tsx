@@ -38,6 +38,12 @@ export default function NavBar() {
                 Awards
               </a>
               <a
+                href="#contributions"
+                class="px-3 py-2 rounded-md text-sm font-medium text-black dark:text-white"
+              >
+                Contributions
+              </a>
+              <a
                 href="#contact"
                 class="px-3 py-2 rounded-md text-sm font-medium text-black dark:text-white"
               >
@@ -126,6 +132,12 @@ export default function NavBar() {
             class="block px-8 py-2 rounded-md text-base font-medium text-black dark:text-white"
           >
             Awards
+          </a>
+          <a
+            href="#contributions"
+            class="block px-8 py-2 rounded-md text-base font-medium text-black dark:text-white"
+          >
+            Contributions
           </a>
           <a
             href="#contact"
