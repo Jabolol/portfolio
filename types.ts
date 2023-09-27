@@ -6,11 +6,8 @@ export type CardProps = {
   description: string;
   Component: ({ ...props }) => JSX.Element;
   inject: string;
+  link?: string;
 };
-
-export type WithLink = {
-  link: string;
-} & CardProps;
 
 export type Year = number | "last";
 
@@ -24,4 +21,11 @@ export type ApiResponse = {
 
 export type ApiErrorResponse = {
   error: string;
+};
+
+export type SectionProps = {
+  id: string;
+  title: string;
+  description: string;
+  items: CardProps[];
 };
