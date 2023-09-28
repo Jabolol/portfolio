@@ -25,7 +25,7 @@ export const fetchCalendarData = async (
   const data: ApiResponse | ApiErrorResponse = await response.json();
 
   if (isError(data)) {
-    throw new Error((data as ApiErrorResponse).error);
+    throw new Error(data.error);
   }
 
   return data;
