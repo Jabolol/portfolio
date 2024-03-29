@@ -2,7 +2,6 @@ import { Head } from "$fresh/runtime.ts";
 import Navbar from "~/islands/Navbar.tsx";
 import Hero from "~/islands/Hero.tsx";
 import Footer from "~/components/Footer.tsx";
-import Contributions from "~/islands/Contributions.tsx";
 import Section from "~/components/Section.tsx";
 import { about, awards, contact, projects } from "~/misc.ts";
 
@@ -33,7 +32,6 @@ export default function Home() {
           description="Some of my hackathon feats."
           items={awards}
         />
-        <Contributions />
         <Section
           id="contact"
           title="Contact"
