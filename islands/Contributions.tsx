@@ -8,11 +8,16 @@ export default function Contributions() {
   const { width, getWidth } = useWidth();
   const { ref, isLoaded } = useFadeIn<HTMLDivElement>();
   const isReduced = useComputed(() => width.value < getWidth("lg"));
-  const total = useSignal<number | null>(null);
-
-  const displayTotal = useComputed(() =>
-    total.value !== null ? String(total.value) : "..."
+  const total = useSignal<{ lastSixMonths: number; fullYear: number } | null>(
+    null,
   );
+
+  const displayTotal = useComputed(() => {
+    if (total.value === null) return "...";
+    return String(
+      isReduced.value ? total.value.lastSixMonths : total.value.fullYear,
+    );
+  });
   const displayPeriod = useComputed(() =>
     isReduced.value ? "6 months" : "year"
   );

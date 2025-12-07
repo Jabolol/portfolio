@@ -1,10 +1,13 @@
 import { Resvg } from "resvg-wasm";
-import render from "preact-render-to-string";
-import Calendar, { Activity, ThemeInput } from "activity-calendar";
-import { ApiErrorResponse, ApiResponse, Year } from "~/types.ts";
+import { render } from "preact-render-to-string";
+import { Activity, default as Calendar, ThemeInput } from "activity-calendar";
+import { ApiResponse, Year } from "~/types.ts";
 import { CALENDAR_THEME } from "~/constants/index.ts";
-
-const API_URL = "https://github-contributions-api.jogruber.de/v4/";
+import {
+  fetchFromAPI,
+  getCachedContributions,
+  setCachedContributions,
+} from "~/utils/contributions-cache.ts";
 
 export const selectLastHalfYear = (contributions: Activity[]) => {
   const cutoff = new Date();
@@ -17,20 +20,20 @@ export const selectLastHalfYear = (contributions: Activity[]) => {
 export const totalCountFor = (contributions: Activity[]) =>
   contributions.reduce((sum, { count }) => sum + count, 0);
 
-const isError = (
-  data: ApiResponse | ApiErrorResponse,
-): data is ApiErrorResponse => (data as ApiErrorResponse).error !== undefined;
-
 export const fetchCalendarData = async (
   username: string,
   year: Year,
 ): Promise<ApiResponse> => {
-  const response = await fetch(`${API_URL}${username}?y=${year}`);
-  const data: ApiResponse | ApiErrorResponse = await response.json();
-
-  if (isError(data)) {
-    throw new Error(data.error);
+  const cached = await getCachedContributions(username);
+  if (cached) {
+    console.log(`[cache] Using cached data for ${username}`);
+    return cached;
   }
+
+  console.log(`[cache] Cache miss for ${username}, fetching from API...`);
+  const data = await fetchFromAPI(username, year);
+
+  await setCachedContributions(username, data);
 
   return data;
 };
@@ -51,6 +54,7 @@ export async function getData(
   const theme = CALENDAR_THEME as ThemeInput;
 
   const CalendarWrapper = () => (
+    // @ts-expect-error React component used in Preact via compat layer
     <Calendar
       data={filtered}
       theme={theme}

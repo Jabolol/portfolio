@@ -30,5 +30,5 @@ SITE_URL=https://yourdomain.com
 Run the development server:
 
 ```sh
-deno task start
+deno task dev
 ```

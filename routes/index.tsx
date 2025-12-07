@@ -1,4 +1,4 @@
-import { Head } from "$fresh/runtime.ts";
+import { Head } from "fresh/runtime";
 import Navbar from "~/islands/Navbar.tsx";
 import Hero from "~/islands/Hero.tsx";
 import Footer from "~/components/Footer.tsx";

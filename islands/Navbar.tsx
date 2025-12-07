@@ -19,11 +19,11 @@ export default function NavBar() {
   const { isDarkMode, toggle } = useDarkMode();
 
   return (
-    <nav class="fixed bg-white bg-opacity-60 dark:bg-gray-900 dark:bg-opacity-60 shadow-md fixed w-full top-0 left-0 z-10">
+    <nav class="fixed bg-white bg-opacity-60 dark:bg-gray-900 dark:bg-opacity-60 shadow-md w-full top-0 left-0 z-10 transition-colors duration-500">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
           <div class="flex">
-            <div class="flex-shrink-0 flex items-center gap-1 m-2 p-2 rounded-lg">
+            <div class="shrink-0 flex items-center gap-1 m-2 p-2 rounded-lg">
               <a href="/" class="font-bold text-lg dark:text-white">
                 Javier R.
               </a>
@@ -52,14 +52,14 @@ export default function NavBar() {
               aria-label={isDarkMode.value
                 ? "Activate light mode"
                 : "Activate dark mode"}
-              class="inline-flex items-center justify-center p-2 rounded-md text-black dark:text-white focus:outline-none"
+              class="inline-flex items-center justify-center p-2 rounded-md text-black dark:text-white focus:outline-none cursor-pointer"
               onClick={toggle}
             >
               {isDarkMode.value ? <IconMoon /> : <IconSun />}
             </button>
             <button
               type="button"
-              class="flex sm:hidden inline-flex items-center justify-center p-2 rounded-md text-black dark:text-white focus:outline-none"
+              class="sm:hidden inline-flex items-center justify-center p-2 rounded-md text-black dark:text-white focus:outline-none"
               aria-label="Main menu"
               aria-expanded={open.value ? "true" : "false"}
               onClick={() => open.value = !open.value}
