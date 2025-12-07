@@ -1,22 +1,32 @@
 import { computed, signal, useSignalEffect } from "@preact/signals";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
-const isListening = signal<boolean>(false);
 const isDarkMode = signal<boolean>(false);
 
 const useDarkMode = () => {
   const toggle = () => isDarkMode.value = !isDarkMode.value;
 
-  if (!isListening.value && IS_BROWSER) {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  useSignalEffect(() => {
+    if (!IS_BROWSER) return;
+
+    const mediaQuery = globalThis.matchMedia("(prefers-color-scheme: dark)");
     isDarkMode.value = mediaQuery.matches;
 
-    useSignalEffect(() => {
-      document.documentElement.classList.toggle("dark", isDarkMode.value);
-    });
+    const handleChange = (e: MediaQueryListEvent) => {
+      isDarkMode.value = e.matches;
+    };
 
-    isListening.value = true;
-  }
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
+  });
+
+  useSignalEffect(() => {
+    if (!IS_BROWSER) return;
+    document.documentElement.classList.toggle("dark", isDarkMode.value);
+  });
 
   const mode = computed(() => isDarkMode.value ? "dark" : "light");
 
