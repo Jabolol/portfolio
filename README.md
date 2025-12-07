@@ -1,15 +1,6 @@
-# portfolio
+![Open Graph preview](https://javirios.com/api/og)
 
-<img align="right" src="https://fresh.deno.dev/logo.svg" height="150px" alt="the fresh logo: a sliced lemon dripping with juice" />
-
-Welcome to my **portfolio**!
-
-- Showcases some of my latest projects and skills.
-- Built using Deno, a modern runtime for JavaScript and TypeScript.
-- Styled using Tailwind CSS to create a sleek and responsive design.
-- Coded with TypeScript, to write clean and maintainable code.
-
-# getting started
+## Getting started
 
 Install deno if you haven't already:
 
@@ -21,6 +12,19 @@ Clone the repo:
 
 ```sh
 git clone git@github.com:Jabolol/portfolio.git .
+```
+
+Set up environment variables:
+
+```sh
+cp .env.example .env
+```
+
+Edit `.env` and add your GitHub username and other variables:
+
+```env
+GITHUB_USERNAME=your_github_username
+SITE_URL=https://yourdomain.com
 ```
 
 Run the development server:
