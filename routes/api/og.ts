@@ -1,5 +1,5 @@
-import { defineRoute } from "$fresh/src/server/defines.ts";
 import { generateOGImage } from "~/utils/og-generator.tsx";
+import { Context } from "fresh";
 
 let cachedImage: Uint8Array<ArrayBuffer> | null = null;
 let cachedEtag: string | null = null;
@@ -29,35 +29,33 @@ async function getImage(): Promise<
   return { data, etag };
 }
 
-export default defineRoute(async (req) => {
-  if (req.method !== "GET") {
-    return new Response("Method not allowed", {
-      status: 405,
-    });
-  }
+export const handler = {
+  async GET(ctx: Context<unknown>) {
+    const req = ctx.req;
 
-  try {
-    const { data, etag } = await getImage();
+    try {
+      const { data, etag } = await getImage();
 
-    if (req.headers.get("If-None-Match") === etag) {
-      return new Response(null, {
-        status: 304,
+      if (req.headers.get("If-None-Match") === etag) {
+        return new Response(null, {
+          status: 304,
+          headers: {
+            ETag: etag,
+            "Cache-Control": "public, max-age=86400, immutable",
+          },
+        });
+      }
+
+      return new Response(new Blob([data], { type: "image/png" }), {
         headers: {
-          ETag: etag,
+          "Content-Type": "image/png",
           "Cache-Control": "public, max-age=86400, immutable",
+          ETag: etag,
         },
       });
+    } catch (error) {
+      console.error("[OG] Error generating image:", error);
+      return new Response("Error generating OG image", { status: 500 });
     }
-
-    return new Response(new Blob([data], { type: "image/png" }), {
-      headers: {
-        "Content-Type": "image/png",
-        "Cache-Control": "public, max-age=86400, immutable",
-        ETag: etag,
-      },
-    });
-  } catch (error) {
-    console.error("[OG] Error generating image:", error);
-    return new Response("Error generating OG image", { status: 500 });
-  }
-});
+  },
+};

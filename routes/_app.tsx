@@ -1,6 +1,6 @@
-import { AppProps } from "$fresh/server.ts";
+import { PageProps } from "fresh";
 
-export default function App({ Component }: AppProps) {
+export default function App({ Component }: PageProps) {
   const siteUrl = (Deno.env.get("SITE_URL") ?? "http://localhost:8000").replace(
     /\/$/,
     "",
