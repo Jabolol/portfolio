@@ -1,5 +1,5 @@
-import { initWasm, Resvg } from "resvg-wasm";
-import render from "preact-render-to-string";
+import { Resvg } from "resvg-wasm";
+import { render } from "preact-render-to-string";
 import IconBrandTypescript from "$icons/brand-typescript.tsx";
 import IconBrandPython from "$icons/brand-python.tsx";
 import IconBrandCoinbase from "$icons/brand-coinbase.tsx";
@@ -28,7 +28,7 @@ const OGCard = ({
   stat2,
   location,
 }: OGCardProps) => {
-  const bgColor = "rgb(24, 24, 27)";
+  const bgColor = "rgb(18, 24, 39)";
   const textColor = "#ffffff";
 
   const techBadges = [
@@ -46,7 +46,6 @@ const OGCard = ({
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-
         <linearGradient id="gradient-1" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" style="stop-color:#f43f5e;stop-opacity:1" />
           <stop offset="100%" style="stop-color:#d946ef;stop-opacity:1" />
@@ -157,10 +156,6 @@ const OGCard = ({
   );
 };
 
-const wasmInit = initWasm(
-  fetch("https://esm.sh/@resvg/resvg-wasm@2.6.2/index_bg.wasm"),
-);
-
 async function loadFont(path: string): Promise<Uint8Array> {
   const url = new URL(path, import.meta.url);
 
@@ -178,9 +173,7 @@ const [fontBold, fontSemiBold] = await Promise.all([
   loadFont("../static/fonts/Inter-SemiBold.woff2"),
 ]);
 
-export async function generateOGImage(): Promise<Uint8Array> {
-  await wasmInit;
-
+export function generateOGImage() {
   const CardWrapper = () => <OGCard {...OG_DATA} />;
 
   const finalSvg = render(<CardWrapper />);
