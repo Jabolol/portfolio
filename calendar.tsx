@@ -1,17 +1,21 @@
 import { Resvg } from "resvg-wasm";
-import { renderToString } from "preact-render-to-string";
+import render from "preact-render-to-string";
 import Calendar, { Activity, ThemeInput } from "activity-calendar";
 import { ApiErrorResponse, ApiResponse, Year } from "~/types.ts";
+import { CALENDAR_THEME } from "~/constants/index.ts";
 
 const API_URL = "https://github-contributions-api.jogruber.de/v4/";
 
-const selectLastHalfYear = (contributions: Activity[]) =>
-  contributions.filter(
-    (activity) => (new Date(activity.date).getFullYear() ===
-        new Date().getFullYear() &&
-      new Date(activity.date).getMonth() > new Date().getMonth() - 6 &&
-      new Date(activity.date).getMonth() <= new Date().getMonth()),
-  );
+export const selectLastHalfYear = (contributions: Activity[]) => {
+  const cutoff = new Date();
+  cutoff.setHours(0, 0, 0, 0);
+  cutoff.setMonth(cutoff.getMonth() - 6);
+
+  return contributions.filter((activity) => new Date(activity.date) >= cutoff);
+};
+
+export const totalCountFor = (contributions: Activity[]) =>
+  contributions.reduce((sum, { count }) => sum + count, 0);
 
 const isError = (
   data: ApiResponse | ApiErrorResponse,
@@ -38,20 +42,24 @@ export async function getData(
   half = false,
 ): Promise<Uint8Array> {
   const { contributions, total } = await fetchCalendarData(username, year);
-  const totalCount = year === "last" ? total["lastYear"] : total[year];
-  const theme = {
-    light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
-    dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
-  } as ThemeInput;
+  const filtered = half ? selectLastHalfYear(contributions) : contributions;
+  const totalCount = half
+    ? totalCountFor(filtered)
+    : year === "last"
+    ? total["lastYear"]
+    : total[year];
+  const theme = CALENDAR_THEME as ThemeInput;
 
-  const str = renderToString(
+  const CalendarWrapper = () => (
     <Calendar
-      data={half ? selectLastHalfYear(contributions) : contributions}
+      data={filtered}
       theme={theme}
       labels={{ totalCount: "{{count}} contributions" }}
       totalCount={totalCount}
-    />,
+    />
   );
+
+  const str = render(<CalendarWrapper />);
 
   const contents = str.slice(str.indexOf("<svg"), str.indexOf("<footer"))
     .replaceAll(/<svg/g, '<svg xmlns="http://www.w3.org/2000/svg"')

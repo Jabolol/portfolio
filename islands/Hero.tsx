@@ -6,19 +6,25 @@ export default function Hero() {
 
   return (
     <div class="pt-20">
-      <div class="container mx-auto px-16 py-12 sm:px-6 lg:px-8">
-        <h1 class="text-5xl font-bold text-center mb-8 sm:mb-12">
-          Software engineering{" "}
-          <span class="bg-gradient-to-r from-rose-500 to-fuchsia-500 text-transparent bg-clip-text">
-            student
+      <div class="container mx-auto px-6 sm:px-6 lg:px-8 max-w-5xl">
+        <h1 class="text-4xl md:text-5xl font-bold text-center mb-8 sm:mb-12 leading-tight space-y-2">
+          <span class="block">
+            Impact data{" "}
+            <span class="bg-gradient-to-r from-rose-500 to-fuchsia-500 text-transparent bg-clip-text">
+              engineer
+            </span>
           </span>
-          ,{" "}
-          <span class="bg-gradient-to-r from-fuchsia-500 to-purple-500 text-transparent bg-clip-text nowrap">
-            freelancer
-          </span>{" "}
-          and{" "}
-          <span class="bg-gradient-to-r from-purple-700 to-sky-300 text-transparent bg-clip-text nowrap">
-            blogger
+          <span class="block">
+            distributed data{" "}
+            <span class="bg-gradient-to-r from-fuchsia-500 to-purple-500 text-transparent bg-clip-text whitespace-nowrap">
+              platform builder
+            </span>
+          </span>
+          <span class="block">
+            and{" "}
+            <span class="bg-gradient-to-r from-purple-700 to-sky-300 text-transparent bg-clip-text whitespace-nowrap">
+              open-source hacker
+            </span>
           </span>
         </h1>
         <div class="flex flex-col items-center gap-y-3">

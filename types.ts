@@ -4,18 +4,22 @@ import { Activity } from "activity-calendar";
 export type CardProps = {
   title: string;
   description: string;
-  Component: ({ ...props }) => JSX.Element;
+  Component: (
+    props: JSX.SVGAttributes<SVGSVGElement> & {
+      size?: number;
+      color?: string;
+      stroke?: number;
+    },
+  ) => JSX.Element;
   inject: string;
   link?: string;
+  date?: string;
 };
 
 export type Year = number | "last";
 
 export type ApiResponse = {
-  total: {
-    [year: number]: number;
-    [year: string]: number;
-  };
+  total: Record<number | string, number> & { lastYear: number };
   contributions: Array<Activity>;
 };
 
@@ -28,4 +32,10 @@ export type SectionProps = {
   title: string;
   description: string;
   items: CardProps[];
+};
+
+export type NavLink = {
+  href: string;
+  label: string;
+  external?: boolean;
 };
