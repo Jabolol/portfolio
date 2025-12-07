@@ -1,10 +1,18 @@
 import { initWasm } from "resvg-wasm";
 import { defineRoute } from "$fresh/src/server/defines.ts";
-import { fetchCalendarData, getData } from "~/calendar.tsx";
+import {
+  fetchCalendarData,
+  getData,
+  selectLastHalfYear,
+  totalCountFor,
+} from "~/calendar.tsx";
 
-const USERNAME = Deno.env.get("GITHUB_USERNAME")!;
+const USERNAME = Deno.env.get("GITHUB_USERNAME");
+if (!USERNAME) {
+  throw new Error("GITHUB_USERNAME environment variable is required");
+}
 
-await initWasm(fetch("https://esm.sh/@resvg/resvg-wasm@2.4.1/index_bg.wasm"));
+await initWasm(fetch("https://esm.sh/@resvg/resvg-wasm@2.6.2/index_bg.wasm"));
 
 export default defineRoute(async (req) => {
   if (req.method !== "GET") {
@@ -19,18 +27,31 @@ export default defineRoute(async (req) => {
   const json = url.searchParams.get("json")?.toLowerCase() === "true";
 
   if (json) {
-    const data = await fetchCalendarData(USERNAME, "last");
+    try {
+      const data = await fetchCalendarData(USERNAME, "last");
+      const contributions = half
+        ? selectLastHalfYear(data.contributions)
+        : data.contributions;
+      const total = half
+        ? totalCountFor(contributions)
+        : data.total["lastYear"];
 
-    return new Response(JSON.stringify(data.total["lastYear"]), {
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+      return new Response(JSON.stringify(total), {
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+    } catch (err) {
+      console.error("Error fetching calendar data:", err);
+      return new Response("Error fetching data", { status: 500 });
+    }
   }
 
-  const data = await getData(USERNAME, "last", mode as "dark" | "light", half);
+  const validatedMode = mode === "dark" || mode === "light" ? mode : "dark";
+  const data = await getData(USERNAME, "last", validatedMode, half);
+  const blob = new Blob([new Uint8Array(data)], { type: "image/png" });
 
-  return new Response(data, {
+  return new Response(blob, {
     headers: {
       "content-type": "image/png",
     },

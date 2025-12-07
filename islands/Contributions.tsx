@@ -1,21 +1,34 @@
-import { useSignal, useSignalEffect } from "@preact/signals";
+import { useComputed, useSignal, useSignalEffect } from "@preact/signals";
 import useDarkMode from "~/hooks/darkMode.ts";
 import useWidth from "~/hooks/width.ts";
 import useFadeIn from "~/hooks/fadeIn.ts";
 
 export default function Contributions() {
   const { mode } = useDarkMode();
-  const { width, breakpoint, getWidth } = useWidth();
+  const { width, getWidth } = useWidth();
   const { ref, isLoaded } = useFadeIn<HTMLDivElement>();
-  const isReduced = width.value < getWidth(breakpoint.value);
-  const total = useSignal(NaN);
+  const isReduced = useComputed(() => width.value < getWidth("lg"));
+  const total = useSignal<number | null>(null);
+
+  const displayTotal = useComputed(() =>
+    total.value !== null ? String(total.value) : "..."
+  );
+  const displayPeriod = useComputed(() =>
+    isReduced.value ? "6 months" : "year"
+  );
 
   useSignalEffect(() => {
     const controller = new AbortController();
 
-    fetch("/api/graph?json=true", { signal: controller.signal }).then((res) =>
-      res.json()
-    ).then((data) => total.value = data);
+    fetch(`/api/graph?json=true&half=${isReduced.value}`, {
+      signal: controller.signal,
+    }).then((res) => res.json()).then((data) => total.value = data).catch(
+      (err) => {
+        if (err.name !== "AbortError") {
+          console.error("Error fetching contributions:", err);
+        }
+      },
+    );
 
     return () => {
       controller.abort();
@@ -34,7 +47,7 @@ export default function Contributions() {
             Contributions
           </h1>
           <p class="mt-4 text-lg lg:text-2xl dark:text-gray-400 text-gray-600 max-w-[18rem] md:max-w-[30rem] lg:max-w-[60rem]">
-            {total.value} commits in the last {isReduced ? "6 months" : "year"}.
+            {displayTotal} commits in the last {displayPeriod}.
           </p>
         </div>
       </div>
@@ -46,10 +59,10 @@ export default function Contributions() {
       >
         <img
           height={130}
-          width={isReduced ? 428 : 844}
+          width={isReduced.value ? 428 : 844}
           class="transition-opacity duration-500"
           alt={`Contributions graph for ${mode.value} mode`}
-          src={`/api/graph?mode=${mode.value}&half=${isReduced}`}
+          src={`/api/graph?mode=${mode.value}&half=${isReduced.value}`}
         />
       </div>
     </>
