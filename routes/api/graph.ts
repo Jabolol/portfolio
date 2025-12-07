@@ -7,9 +7,11 @@ import {
   totalCountFor,
 } from "~/calendar.tsx";
 
-const USERNAME = Deno.env.get("GITHUB_USERNAME");
-if (!USERNAME) {
-  throw new Error("GITHUB_USERNAME environment variable is required");
+const USERNAME = Deno.env.get("GITHUB_USERNAME") ?? "octocat";
+if (USERNAME === "octocat") {
+  console.warn(
+    "[graph] Falling back to stub user because GITHUB_USERNAME is not set",
+  );
 }
 
 await initWasm(fetch("https://esm.sh/@resvg/resvg-wasm@2.6.2/index_bg.wasm"));
