@@ -1,5 +1,6 @@
 import { useSignal, useSignalEffect } from "@preact/signals";
-import { phrases } from "~/misc.ts";
+import { phrases } from "~/data/index.ts";
+import { FADE_DURATION, PHRASE_DISPLAY_DURATION } from "~/constants/index.ts";
 
 const getRandomPhrase = (prev = ""): string => {
   const phrase = phrases[Math.floor(Math.random() * phrases.length)];
@@ -16,8 +17,8 @@ const useIntro = () => {
       setTimeout(() => {
         intro.value = getRandomPhrase(intro.value);
         isVisible.value = true;
-      }, 500);
-    }, 3e3);
+      }, FADE_DURATION);
+    }, PHRASE_DISPLAY_DURATION);
 
     return () => {
       clearInterval(intervalId);

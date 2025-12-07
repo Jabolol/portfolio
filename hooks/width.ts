@@ -1,15 +1,15 @@
-import { useComputed, useSignal } from "@preact/signals";
+import { useComputed, useSignal, useSignalEffect } from "@preact/signals";
+import { IS_BROWSER } from "$fresh/runtime.ts";
+import { BREAKPOINTS } from "~/constants/index.ts";
 
 const useWidth = () => {
-  const width = useSignal(window.innerWidth);
-
-  const onResize = () => {
-    width.value = window.innerWidth;
-  };
+  const width = useSignal(
+    typeof globalThis.window === "undefined" ? 0 : globalThis.window.innerWidth,
+  );
 
   const data = {
-    width: [0, 768, 992, 1200],
-    breakpoints: ["sm", "md", "lg", "xl"],
+    width: BREAKPOINTS.values,
+    breakpoints: BREAKPOINTS.names,
   } as const;
 
   const getBreakpoint = () => {
@@ -26,7 +26,19 @@ const useWidth = () => {
 
   const breakpoint = useComputed(getBreakpoint);
 
-  addEventListener("resize", onResize, { passive: true });
+  useSignalEffect(() => {
+    if (!IS_BROWSER) return;
+
+    const onResize = () => {
+      width.value = globalThis.window.innerWidth;
+    };
+
+    addEventListener("resize", onResize, { passive: true });
+
+    return () => {
+      removeEventListener("resize", onResize);
+    };
+  });
 
   return { width, breakpoint, getWidth };
 };

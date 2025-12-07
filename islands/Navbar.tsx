@@ -2,6 +2,17 @@ import IconSun from "$icons/sun.tsx";
 import IconMoon from "$icons/moon.tsx";
 import { useSignal } from "@preact/signals";
 import useDarkMode from "~/hooks/darkMode.ts";
+import type { NavLink } from "~/types.ts";
+
+const NAV_LINKS: readonly NavLink[] = [
+  { href: "#about", label: "About" },
+  { href: "#experience", label: "Experience" },
+  { href: "#projects", label: "Projects" },
+  { href: "#awards", label: "Awards" },
+  { href: "#contributions", label: "Contributions" },
+  { href: "#contact", label: "Contact" },
+  { href: "https://javi-blog.deno.dev/", label: "Blog", external: true },
+];
 
 export default function NavBar() {
   const open = useSignal(false);
@@ -19,49 +30,25 @@ export default function NavBar() {
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
-              <a
-                href="#about"
-                class="px-3 py-2 rounded-md text-sm font-medium text-black dark:text-white"
-              >
-                About
-              </a>
-              <a
-                href="#projects"
-                class="px-3 py-2 rounded-md text-sm font-medium text-black dark:text-white"
-              >
-                Projects
-              </a>
-              <a
-                href="#awards"
-                class="px-3 py-2 rounded-md text-sm font-medium text-black dark:text-white"
-              >
-                Awards
-              </a>
-              <a
-                href="#contributions"
-                class="px-3 py-2 rounded-md text-sm font-medium text-black dark:text-white"
-              >
-                Contributions
-              </a>
-              <a
-                href="#contact"
-                class="px-3 py-2 rounded-md text-sm font-medium text-black dark:text-white"
-              >
-                Contact
-              </a>
-              <a
-                href="https://javi-blog.deno.dev/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="px-3 py-2 rounded-md text-sm font-medium text-black dark:text-white"
-              >
-                Blog
-              </a>
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  {...(link.external && {
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                  })}
+                  class="px-3 py-2 rounded-md text-sm font-medium text-black dark:text-white"
+                >
+                  {link.label}
+                </a>
+              ))}
             </div>
           </div>
 
           <div class="flex items-center -mr-2 gap-4">
             <button
+              type="button"
               aria-label={isDarkMode.value
                 ? "Activate light mode"
                 : "Activate dark mode"}
@@ -71,6 +58,7 @@ export default function NavBar() {
               {isDarkMode.value ? <IconMoon /> : <IconSun />}
             </button>
             <button
+              type="button"
               class="flex sm:hidden inline-flex items-center justify-center p-2 rounded-md text-black dark:text-white focus:outline-none"
               aria-label="Main menu"
               aria-expanded={open.value ? "true" : "false"}
@@ -115,44 +103,19 @@ export default function NavBar() {
       </div>
       <div class={open.value ? "" : "hidden sm:hidden"}>
         <div class="pt-2 pb-1 space-y-1">
-          <a
-            href="#about"
-            class="block px-8 py-2 rounded-md text-base font-medium text-black dark:text-white"
-          >
-            About
-          </a>
-          <a
-            href="#projects"
-            class="block px-8 py-2 rounded-md text-base font-medium text-black dark:text-white"
-          >
-            Projects
-          </a>
-          <a
-            href="#awards"
-            class="block px-8 py-2 rounded-md text-base font-medium text-black dark:text-white"
-          >
-            Awards
-          </a>
-          <a
-            href="#contributions"
-            class="block px-8 py-2 rounded-md text-base font-medium text-black dark:text-white"
-          >
-            Contributions
-          </a>
-          <a
-            href="#contact"
-            class="block px-8 py-2 rounded-md text-base font-medium text-black dark:text-white"
-          >
-            Contact
-          </a>
-          <a
-            href="https://javi-blog.deno.dev/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="block px-8 py-2 rounded-md text-base font-medium text-black dark:text-white"
-          >
-            Blog
-          </a>
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              {...(link.external && {
+                target: "_blank",
+                rel: "noopener noreferrer",
+              })}
+              class="block px-8 py-2 rounded-md text-base font-medium text-black dark:text-white"
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
       </div>
     </nav>

@@ -4,7 +4,8 @@ import Hero from "~/islands/Hero.tsx";
 import Footer from "~/components/Footer.tsx";
 import Contributions from "~/islands/Contributions.tsx";
 import Section from "~/components/Section.tsx";
-import { about, awards, contact, projects } from "~/misc.ts";
+import { about, awards, contact, experience, projects } from "~/data/index.ts";
+import ServiceWorkerCleanup from "~/islands/ServiceWorkerCleanup.tsx";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Head>
         <title>Javier R.</title>
       </Head>
+      <ServiceWorkerCleanup />
       <main class="bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-500">
         <Navbar />
         <Hero />
@@ -22,6 +24,12 @@ export default function Home() {
           items={about}
         />
         <Section
+          id="experience"
+          title="Work Experience"
+          description="My professional journey in software engineering."
+          items={experience}
+        />
+        <Section
           id="projects"
           title="Projects"
           description="Some of my latest projects."
@@ -30,7 +38,7 @@ export default function Home() {
         <Section
           id="awards"
           title="Awards"
-          description="Some of my hackathon feats."
+          description="Hackathon highlights and wins."
           items={awards}
         />
         <Contributions />
