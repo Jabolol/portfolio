@@ -1,7 +1,7 @@
 {
-  "name": "Javi's porfolio",
-  "short_name": "Javi's portfolio",
-  "theme_color": "#18181b",
+  "name": "Javier Ríos Urbano - Software Engineer",
+  "short_name": "Javier R.",
+  "theme_color": "#d946ef",
   "background_color": "#18181b",
   "icons": [
     {
@@ -20,7 +20,7 @@
   "scope": "/",
   "prefer_related_applications": false,
   "related_applications": [],
-  "description": "Explore Javi's portfolio and discover his latest projects in full stack development and design.",
+  "description": "Software Engineer at Kariba Labs processing 1.2+ PB monthly. 9-time hackathon winner specializing in distributed systems and blockchain infrastructure.",
   "lang": "en-GB",
   "dir": "ltr",
   "orientation": "any"
