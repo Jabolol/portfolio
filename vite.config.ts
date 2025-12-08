@@ -9,4 +9,7 @@ export default defineConfig({
     tailwindcss({ optimize: true }),
     arraybuffer(),
   ],
+  assetsInclude: [
+    "./static/fonts/*.woff2",
+  ],
 });
