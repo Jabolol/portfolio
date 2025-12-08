@@ -20,7 +20,9 @@ async function generateETag(data: Uint8Array | string): Promise<string> {
     : new Uint8Array(data);
   const hashBuffer = await crypto.subtle.digest("SHA-256", dataBytes);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join(
+    "",
+  );
   return `"${hashHex.substring(0, 32)}"`;
 }
 
@@ -53,7 +55,8 @@ export const handler = {
             status: 304,
             headers: {
               "etag": etag,
-              "cache-control": "public, max-age=600, stale-while-revalidate=300",
+              "cache-control":
+                "public, max-age=600, stale-while-revalidate=300",
             },
           });
         }

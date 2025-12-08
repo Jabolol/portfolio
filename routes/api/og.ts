@@ -9,7 +9,9 @@ async function getImage(): Promise<
 
   const hashBuffer = await crypto.subtle.digest("SHA-256", uint8);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join(
+    "",
+  );
   const etag = `"${hashHex.substring(0, 32)}"`;
 
   return { data: uint8.buffer, etag };
