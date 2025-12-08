@@ -39,6 +39,6 @@
     "project": "1c335ba4-0a27-42a9-bb88-9df460aa05d3",
     "exclude": ["**/node_modules"],
     "include": [],
-    "entrypoint": "main.ts"
+    "entrypoint": "_fresh/server.js"
   }
 }
