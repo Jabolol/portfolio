@@ -27,6 +27,7 @@
     "resvg-wasm": "npm:@resvg/resvg-wasm@^2.6.2",
     "$std/": "https://deno.land/std@0.202.0/",
     "vite": "npm:vite@^7.2.6",
+    "vite-plugin-arraybuffer": "npm:vite-plugin-arraybuffer@^0.1.1",
     "~/": "./",
     "fresh": "jsr:@fresh/core@^2.2.0"
   },
@@ -39,6 +40,6 @@
     "project": "1c335ba4-0a27-42a9-bb88-9df460aa05d3",
     "exclude": ["**/node_modules"],
     "include": [],
-    "entrypoint": "main.ts"
+    "entrypoint": "_fresh/server.js"
   }
 }

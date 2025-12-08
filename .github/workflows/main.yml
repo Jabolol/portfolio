@@ -29,4 +29,4 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "jabolo"
-          entrypoint: "./main.ts"
+          entrypoint: "./_fresh/server.js"
