@@ -23,13 +23,30 @@ interface OGCardProps {
   location: string;
 }
 
-const OGCard = ({
-  name,
-  company,
-  stat1,
-  stat2,
-  location,
-}: OGCardProps) => {
+const CLIENT_ASSET_BASE = new URL("../../client", import.meta.url);
+
+const normalizeAssetPath = (assetPath: string) =>
+  assetPath.startsWith("/") ? assetPath.slice(1) : assetPath;
+
+const toClientAssetUrl = (assetPath: string): URL =>
+  new URL(normalizeAssetPath(assetPath), CLIENT_ASSET_BASE);
+
+async function loadBinary(url: URL): Promise<Uint8Array> {
+  const response = await fetch(url).catch(() => undefined);
+  if (response?.ok) {
+    return new Uint8Array(await response.arrayBuffer());
+  }
+
+  return await Deno.readFile(url);
+}
+
+function loadFontBuffers(fontPaths: string[]): Promise<Uint8Array[]> {
+  return Promise.all(
+    fontPaths.map((path) => loadBinary(toClientAssetUrl(path))),
+  );
+}
+
+const OGCard = ({ name, company, stat1, stat2, location }: OGCardProps) => {
   const bgColor = "rgb(18, 24, 39)";
   const textColor = "#ffffff";
 
@@ -158,10 +175,9 @@ const OGCard = ({
   );
 };
 
-export function generateOGImage() {
-  const CardWrapper = () => <OGCard {...OG_DATA} />;
-
-  const finalSvg = render(<CardWrapper />);
+export async function generateOGImage() {
+  const finalSvg = render(<OGCard {...OG_DATA} />);
+  const fontBuffers = await loadFontBuffers([InterBold, InterSemiBold]);
 
   const resvg = new Resvg(finalSvg, {
     dpi: 100,
@@ -170,10 +186,7 @@ export function generateOGImage() {
     textRendering: 2,
     fitTo: { mode: "zoom", value: 2 },
     font: {
-      fontBuffers: [
-        new Uint8Array(InterBold),
-        new Uint8Array(InterSemiBold),
-      ],
+      fontBuffers,
       defaultFontFamily: "Inter",
       loadSystemFonts: false,
     },
