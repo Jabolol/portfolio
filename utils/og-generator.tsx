@@ -4,6 +4,8 @@ import IconBrandTypescript from "$icons/brand-typescript.tsx";
 import IconBrandPython from "$icons/brand-python.tsx";
 import IconBrandCoinbase from "$icons/brand-coinbase.tsx";
 import BrandHaskell from "~/components/BrandHaskell.tsx";
+import InterBold from "../static/fonts/Inter-Bold.woff2?arraybuffer";
+import InterSemiBold from "../static/fonts/Inter-SemiBold.woff2?arraybuffer";
 
 export const OG_DATA = {
   name: "Javier Ríos Urbano",
@@ -156,23 +158,6 @@ const OGCard = ({
   );
 };
 
-async function loadFont(path: string): Promise<Uint8Array> {
-  const url = new URL(path, import.meta.url);
-
-  try {
-    return await Deno.readFile(url);
-  } catch {
-    const res = await fetch(url);
-    const arrayBuffer = await res.arrayBuffer();
-    return new Uint8Array(arrayBuffer);
-  }
-}
-
-const [fontBold, fontSemiBold] = await Promise.all([
-  loadFont("../static/fonts/Inter-Bold.woff2"),
-  loadFont("../static/fonts/Inter-SemiBold.woff2"),
-]);
-
 export function generateOGImage() {
   const CardWrapper = () => <OGCard {...OG_DATA} />;
 
@@ -185,7 +170,10 @@ export function generateOGImage() {
     textRendering: 2,
     fitTo: { mode: "zoom", value: 2 },
     font: {
-      fontBuffers: [fontBold, fontSemiBold],
+      fontBuffers: [
+        new Uint8Array(InterBold),
+        new Uint8Array(InterSemiBold),
+      ],
       defaultFontFamily: "Inter",
       loadSystemFonts: false,
     },
