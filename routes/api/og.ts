@@ -1,32 +1,18 @@
 import { generateOGImage } from "~/utils/og-generator.tsx";
 import { Context } from "fresh";
 
-let cachedImage: Uint8Array<ArrayBuffer> | null = null;
-let cachedEtag: string | null = null;
-
 async function getImage(): Promise<
-  { data: Uint8Array<ArrayBuffer>; etag: string }
+  { data: ArrayBuffer; etag: string }
 > {
-  if (cachedImage && cachedEtag) {
-    return { data: cachedImage, etag: cachedEtag };
-  }
+  const raw = generateOGImage();
+  const uint8 = new Uint8Array(raw);
 
-  const raw = await generateOGImage();
-  const arrayBuf = new ArrayBuffer(raw.byteLength);
-  const data = new Uint8Array(arrayBuf);
-  data.set(raw);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", uint8);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+  const etag = `"${hashHex.substring(0, 32)}"`;
 
-  const hashBuffer = await crypto.subtle.digest("SHA-1", data);
-  const hashArray = [...new Uint8Array(hashBuffer)];
-  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join(
-    "",
-  );
-  const etag = `W/"${hashHex}"`;
-
-  cachedImage = data;
-  cachedEtag = etag;
-
-  return { data, etag };
+  return { data: uint8.buffer, etag };
 }
 
 export const handler = {
@@ -36,21 +22,21 @@ export const handler = {
     try {
       const { data, etag } = await getImage();
 
-      if (req.headers.get("If-None-Match") === etag) {
+      if (req.headers.get("if-none-match") === etag) {
         return new Response(null, {
           status: 304,
           headers: {
-            ETag: etag,
-            "Cache-Control": "public, max-age=86400, immutable",
+            "etag": etag,
+            "cache-control": "public, max-age=86400, immutable",
           },
         });
       }
 
-      return new Response(new Blob([data], { type: "image/png" }), {
+      return new Response(data, {
         headers: {
-          "Content-Type": "image/png",
-          "Cache-Control": "public, max-age=86400, immutable",
-          ETag: etag,
+          "content-type": "image/png",
+          "cache-control": "public, max-age=86400, immutable",
+          "etag": etag,
         },
       });
     } catch (error) {
