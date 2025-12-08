@@ -4,7 +4,7 @@ import { Context } from "fresh";
 async function getImage(): Promise<
   { data: ArrayBuffer; etag: string }
 > {
-  const raw = generateOGImage();
+  const raw = await generateOGImage();
   const uint8 = new Uint8Array(raw);
 
   const hashBuffer = await crypto.subtle.digest("SHA-256", uint8);

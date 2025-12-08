@@ -4,8 +4,11 @@ import IconBrandTypescript from "$icons/brand-typescript.tsx";
 import IconBrandPython from "$icons/brand-python.tsx";
 import IconBrandCoinbase from "$icons/brand-coinbase.tsx";
 import BrandHaskell from "~/components/BrandHaskell.tsx";
-import InterBold from "../static/fonts/Inter-Bold.woff2?arraybuffer";
-import InterSemiBold from "../static/fonts/Inter-SemiBold.woff2?arraybuffer";
+
+const FONT_URLS = [
+  "https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-700-normal.woff2",
+  "https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-600-normal.woff2",
+];
 
 export const OG_DATA = {
   name: "Javier Ríos Urbano",
@@ -23,13 +26,19 @@ interface OGCardProps {
   location: string;
 }
 
-const OGCard = ({
-  name,
-  company,
-  stat1,
-  stat2,
-  location,
-}: OGCardProps) => {
+async function fetchBinary(url: string): Promise<Uint8Array> {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch font at ${url}: ${response.status}`);
+  }
+  return new Uint8Array(await response.arrayBuffer());
+}
+
+function loadFontBuffers(fontUrls: string[]): Promise<Uint8Array[]> {
+  return Promise.all(fontUrls.map(fetchBinary));
+}
+
+const OGCard = ({ name, company, stat1, stat2, location }: OGCardProps) => {
   const bgColor = "rgb(18, 24, 39)";
   const textColor = "#ffffff";
 
@@ -158,10 +167,9 @@ const OGCard = ({
   );
 };
 
-export function generateOGImage() {
-  const CardWrapper = () => <OGCard {...OG_DATA} />;
-
-  const finalSvg = render(<CardWrapper />);
+export async function generateOGImage() {
+  const finalSvg = render(<OGCard {...OG_DATA} />);
+  const fontBuffers = await loadFontBuffers(FONT_URLS);
 
   const resvg = new Resvg(finalSvg, {
     dpi: 100,
@@ -170,10 +178,7 @@ export function generateOGImage() {
     textRendering: 2,
     fitTo: { mode: "zoom", value: 2 },
     font: {
-      fontBuffers: [
-        new Uint8Array(InterBold),
-        new Uint8Array(InterSemiBold),
-      ],
+      fontBuffers,
       defaultFontFamily: "Inter",
       loadSystemFonts: false,
     },
